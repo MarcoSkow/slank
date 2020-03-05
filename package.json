@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon src/index.js",
-    "verify": "slack-verify --secret e6440fcad5793058e01b9b907f8c01dd --path=/slack/events --port=3000"
+    "verify": "slack-verify --secret e6440fcad5793058e01b9b907f8c01dd --path=/slack/events --port=3000",
+    "heroku": "git push heroku master"
   },
   "author": "Leandro Azevedo",
   "license": "ISC",

@@ -16,7 +16,7 @@ router.get('/lanche', async (req, res) => {
     turma = turma === '01' ? '02' : '01';
     text = `Turma ${turma} - Lanche ! :baguette_bread:`;
     await web.chat.postMessage({ channel, text });
-  }, 1000 * 60 * 10);
+  }, 1000 * 60 * 1);
 
   res.status(200).json(result);
 });
