@@ -4,17 +4,38 @@ const web = new WebClient(process.env.SLACK_TOKEN);
 
 const router = express.Router();
 
-router.get('/lanche', async (req, res) => {
-  const channel = 'bots';
+const emojis = [
+  ':baguette_bread:',
+  ':avocado:',
+  ':bacon:',
+  ':stuffed_flatbread:',
+  ':peanuts:',
+  ':fortune_cookie:',
+  ':egg:',
+  ':sandwich:',
+  ':yum:',
+  ':cut_of_meat:',
+  ':meat_on_bone:'
+];
+
+const rand = (min, max) => Math.floor(Math.random() * max) + min;
+
+router.post('/lanche', async (req, res) => {
+  const channel = req.body.channel || 'bots';
+
   const hoje = new Date().getDate();
+
   let turma = hoje % 2 === 0 ? '01' : '02';
-  let text = `Turma ${turma} - Lanche ! :baguette_bread:`;
+
+  let emoji = rand(0, emojis.length);
+
+  let text = `${emojis[emoji]}  Turma ${turma} - Lanche !  ${emojis[emoji]}`;
 
   const result = await web.chat.postMessage({ channel, text });
 
   setTimeout(async () => {
     turma = turma === '01' ? '02' : '01';
-    text = `Turma ${turma} - Lanche ! :baguette_bread:`;
+    text = `${emojis[emoji]}  Turma ${turma} - Lanche !  ${emojis[emoji]}`;
     await web.chat.postMessage({ channel, text });
   }, 1000 * 60 * 1);
 
