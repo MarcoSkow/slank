@@ -5,7 +5,7 @@ const web = new WebClient(process.env.SLACK_TOKEN);
 const router = express.Router();
 
 router.get('/lanche', async (req, res) => {
-  const channel = 'desenvolvimento';
+  const channel = 'bots';
   const hoje = new Date().getDate();
   let turma = hoje % 2 === 0 ? '01' : '02';
   let text = `Turma ${turma} - Lanche ! :baguette_bread:`;
