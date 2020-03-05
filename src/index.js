@@ -8,11 +8,12 @@ const webapi = require('./webClient/index');
 const urlVerificarion = require('./routes/urlVerifications');
 
 const app = express();
+app.use('/slack/events', slackEvents.expressMiddleware());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/', urlVerificarion);
-app.use('/slack/events', slackEvents.expressMiddleware());
 app.use('/slack/webapi', webapi);
 
 const port = process.env.PORT || 5000;
