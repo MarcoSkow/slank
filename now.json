@@ -1,0 +1,22 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "src/*.js",
+            "use": "@now/node"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "src/index.js"
+        }
+    ],
+    "build": {
+        "env": {
+            "SLACK_TOKEN": "xoxb-593506746261-980282344086-2ZioN8IeKYBQky3QS7V8nb6i",
+            "SLACK_SIGNING_SECRET": "e6440fcad5793058e01b9b907f8c01dd",
+            "PORT": "3000"
+        }
+    }
+}
