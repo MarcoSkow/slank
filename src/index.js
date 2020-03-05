@@ -15,7 +15,7 @@ app.use('/', urlVerificarion);
 app.use('/slack/events', slackEvents.expressMiddleware());
 app.use('/slack/webapi', webapi);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 const server = http.createServer(app);
 server.listen(port, () => {
   console.log(`slank na porta ${port}`);
