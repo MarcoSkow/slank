@@ -37,7 +37,7 @@ router.post('/lanche', async (req, res) => {
     turma = turma === '01' ? '02' : '01';
     text = `${emojis[emoji]}  Turma ${turma} - Lanche !  ${emojis[emoji]}`;
     await web.chat.postMessage({ channel, text });
-  }, 1000 * 60 * 1);
+  }, 1000 * 60 * process.env.LANCHE_INTERVAL);
 
   res.status(200).json(result);
 });
