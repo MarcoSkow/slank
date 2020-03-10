@@ -55,7 +55,7 @@ router.post('/notify', async (req, res) => {
 
   try {
     response = await axios.get('http://us-east1-siacbancohoras.cloudfunctions.net/api/v1/users');
-    user = response.data.users.filter(user => user.zankId === usuarioId)[0];
+    user = response.data.users.filter(user => user.zankId === +usuarioId)[0];
   } catch (error) {
     return res.status(400).json({ ok: false, message: 'usuarioId não localizado!' });
   }
@@ -84,8 +84,8 @@ router.post('/notify', async (req, res) => {
     }
   ];
 
-  attachments[0].fields.push({ title: 'Solicitação', value: solicitacaoId, short: true });
-  attachments[0].fields.push({ title: 'Siac Atendimento', value: atendimento, short: true });
+  attachments[0].fields.push({ title: 'Solicitação', value: +solicitacaoId, short: true });
+  attachments[0].fields.push({ title: 'Siac Atendimento', value: +atendimento, short: true });
   attachments[0].fields.push({ title: 'Sistema', value: sistema });
   attachments[0].fields.push({ title: 'Cliente', value: cliente });
 
