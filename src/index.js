@@ -10,8 +10,7 @@ const urlVerificarion = require('./routes/urlVerifications');
 const app = express();
 app.use('/slack/events', slackEvents.expressMiddleware());
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.json(), express.urlencoded({ extended: false }));
 
 app.use('/', urlVerificarion);
 app.use('/slack/webapi', webapi);

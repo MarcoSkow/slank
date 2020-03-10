@@ -1,8 +1,8 @@
 const { WebClient } = require('@slack/web-api');
 const express = require('express');
 const axios = require('axios').default;
-const web = new WebClient(process.env.SLACK_TOKEN);
 
+const web = new WebClient(process.env.SLACK_TOKEN);
 const router = express.Router();
 
 const emojis = [
@@ -44,7 +44,7 @@ router.post('/lanche', async (req, res) => {
 });
 
 router.post('/notify', async (req, res) => {
-  const { solicitacaoId, sistema, cliente, atendimento, usuarioId } = req.body;
+  const { resumo, solicitacaoId, sistema, cliente, atendimento, usuarioId } = req.body;
 
   if (!usuarioId) {
     return res.status(400).json({ ok: false, message: 'usuarioId não informado ou incorreto.' });
@@ -60,28 +60,36 @@ router.post('/notify', async (req, res) => {
     return res.status(400).json({ ok: false, message: 'usuarioId não localizado!' });
   }
 
-  let blocks = [
+  if (!user) {
+    return res.status(400).json({ ok: false, message: 'Relacionamento entre ID do Zank e ID do Slack não encontrado.' });
+  }
+
+  let attachments = [
     {
-      type: 'section',
-      text: {
-        text: `_Olá <@${user.slackId}>!_ *Uma solicitação do ZANK foi encaminhada pra você.*`,
-        type: 'mrkdwn'
-      },
-      fields: []
+      mrkdwn_in: ['text'],
+      // color: '#36a64f',
+      color: '#952ef3',
+      pretext: `_Olá <@${user.slackId}>!_ *Uma solicitação do ZANK foi encaminhada pra você.*`,
+      author_name: 'Slank-Bot',
+      author_link: 'https://siacsistemas.slack.com/team/UUU8AA42J',
+      author_icon: 'http://placeimg.com/128/128/people',
+      title: 'Resumo',
+      // title_link: 'https://api.slack.com/',
+      text: '```' + `${resumo || 'Resumo da solicitação não informado'}` + '```',
+      fields: [],
+      thumb_url: 'http://placeimg.com/256/256/tech',
+      footer: 'footer',
+      footer_icon: 'https://platform.slack-edge.com/img/default_application_icon.png',
+      ts: Date.now()
     }
   ];
 
-  blocks[0].fields.push({ type: 'mrkdwn', text: '*Solicitação*' });
-  blocks[0].fields.push({ type: 'mrkdwn', text: '*Sistema*' });
-  blocks[0].fields.push({ type: 'plain_text', text: `${solicitacaoId}` });
-  blocks[0].fields.push({ type: 'plain_text', text: sistema });
+  attachments[0].fields.push({ title: 'Solicitação', value: solicitacaoId, short: true });
+  attachments[0].fields.push({ title: 'Siac Atendimento', value: atendimento, short: true });
+  attachments[0].fields.push({ title: 'Sistema', value: sistema });
+  attachments[0].fields.push({ title: 'Cliente', value: cliente });
 
-  blocks[0].fields.push({ type: 'mrkdwn', text: '*Cliente*' });
-  blocks[0].fields.push({ type: 'mrkdwn', text: '*Siac Atendimento*' });
-  blocks[0].fields.push({ type: 'plain_text', text: cliente });
-  blocks[0].fields.push({ type: 'plain_text', text: `${atendimento}` });
-
-  const result = await web.chat.postMessage({ channel: user.slackId, blocks });
+  const result = await web.chat.postMessage({ channel: user.slackId, attachments });
 
   res.status(200).json(result);
 });
