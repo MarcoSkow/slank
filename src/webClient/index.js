@@ -68,7 +68,7 @@ router.post('/notify', async (req, res) => {
   const thumb_url =
     urgente === 'S'
       ? 'https://firebasestorage.googleapis.com/v0/b/siacbancohoras.appspot.com/o/slank%2Furgente.png?alt=media&token=b8134266-1830-4fd8-a0af-d57770f5dd83'
-      : 'http://placeimg.com/256/256/tech';
+      : 'https://placeimg.com/256/256/tech';
 
   let attachments = [
     {
