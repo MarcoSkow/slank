@@ -44,7 +44,7 @@ router.post('/lanche', async (req, res) => {
 });
 
 router.post('/notify', async (req, res) => {
-  const { resumo, solicitacaoId, sistema, cliente, atendimento, usuarioId } = req.body;
+  const { resumo, solicitacaoId, sistema, cliente, atendimento, usuarioId, urgente, status } = req.body;
 
   if (!usuarioId) {
     return res.status(400).json({ ok: false, message: 'usuarioId não informado ou incorreto.' });
@@ -54,8 +54,8 @@ router.post('/notify', async (req, res) => {
   let user;
 
   try {
-    response = await axios.get('http://us-east1-siacbancohoras.cloudfunctions.net/api/v1/users');
-    user = response.data.users.filter(user => user.zankId === +usuarioId)[0];
+    response = await axios.get('http://us-east1-siacbancohoras.cloudfunctions.net/api/v1/users', { params: { zankid: usuarioId } });
+    user = response.data.users[0];
   } catch (error) {
     return res.status(400).json({ ok: false, message: 'usuarioId não localizado!' });
   }
@@ -64,11 +64,17 @@ router.post('/notify', async (req, res) => {
     return res.status(400).json({ ok: false, message: 'Relacionamento entre ID do Zank e ID do Slack não encontrado.' });
   }
 
+  const color = urgente === 'S' ? '#ff0000' : '#952ef3';
+  const thumb_url =
+    urgente === 'S'
+      ? 'https://firebasestorage.googleapis.com/v0/b/siacbancohoras.appspot.com/o/slank%2Furgente.png?alt=media&token=b8134266-1830-4fd8-a0af-d57770f5dd83'
+      : 'http://placeimg.com/256/256/tech';
+
   let attachments = [
     {
       mrkdwn_in: ['text'],
       // color: '#36a64f',
-      color: '#952ef3',
+      color,
       pretext: `_Olá <@${user.slackId}>!_ *Uma solicitação do ZANK foi encaminhada pra você.*`,
       author_name: 'Slank-Bot',
       author_link: 'https://siacsistemas.slack.com/team/UUU8AA42J',
@@ -77,7 +83,7 @@ router.post('/notify', async (req, res) => {
       // title_link: 'https://api.slack.com/',
       text: '```' + `${resumo || 'Resumo da solicitação não informado'}` + '```',
       fields: [],
-      thumb_url: 'http://placeimg.com/256/256/tech',
+      thumb_url,
       footer: 'footer',
       footer_icon: 'https://platform.slack-edge.com/img/default_application_icon.png',
       ts: Date.now()
@@ -86,8 +92,9 @@ router.post('/notify', async (req, res) => {
 
   attachments[0].fields.push({ title: 'Solicitação', value: +solicitacaoId, short: true });
   attachments[0].fields.push({ title: 'Siac Atendimento', value: +atendimento, short: true });
-  attachments[0].fields.push({ title: 'Sistema', value: sistema });
   attachments[0].fields.push({ title: 'Cliente', value: cliente });
+  attachments[0].fields.push({ title: 'Sistema', value: sistema });
+  attachments[0].fields.push({ title: 'Status', value: status });
 
   const result = await web.chat.postMessage({ channel: user.slackId, attachments });
 
