@@ -19,5 +19,5 @@ app.use('/slack/webapi', webapi);
 const port = process.env.PORT || 5000;
 const server = http.createServer(app);
 server.listen(port, () => {
-  console.log(`slank na porta ${port}`);
+  console.log(`Slank Bot ativo, escutando a porta : ${port}`);
 });

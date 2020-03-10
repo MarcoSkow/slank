@@ -54,7 +54,7 @@ async function botInteractive(event) {
   } else if (textWithoutUser.toLowerCase().includes('boa noite')) {
     msg = `Boa noite ${user} ! \nComo posso ajudar ?`;
   } else {
-    await web.chat.postMessage({ channel: USER_ADMIN, text: `${user} envou uma mensagem ao slank : \n ${event.text}` });
+    await web.chat.postMessage({ channel: USER_ADMIN, text: `${user} enviou uma mensagem ao slank : \n ${event.text}` });
   }
   const result = await web.chat.postMessage({ channel, text: msg });
 }
