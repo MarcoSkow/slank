@@ -14,7 +14,7 @@ function commands(req, res, next) {
 
 function hoursToString(hours) {
   if (hours == 0) {
-    return 'Fica tranquilo! O seu saldo está ZERADO!';
+    return 'Fica tranquilo! O seu saldo está ZERADO! :clap::clap:';
   }
   const hoursABS = Math.abs(hours);
   const days = Math.floor(hoursABS / 8.8);
