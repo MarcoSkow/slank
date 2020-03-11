@@ -22,7 +22,7 @@ function handlerBancoHoras(req, res) {
     console.log('----------------------------');
     console.log(user);
     console.log('----------------------------');
-    response_url = response_url.replace('https', 'http');
+    // response_url = response_url.replace('https', 'http');
     console.log(response_url);
     try {
       const response = await axios.post(response_url, { text: 'hoje tem gol do Gabigol !' });

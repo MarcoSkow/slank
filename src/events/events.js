@@ -14,7 +14,7 @@ slackEvents.on('url_verification', (event, body) => {
 
 slackEvents.on('app_mention', async event => {
   console.log('mention :');
-  console.log(event);
+  // console.log(event);
 
   if (event.type !== 'app_mention') {
     return;
@@ -25,8 +25,8 @@ slackEvents.on('app_mention', async event => {
 
 slackEvents.on('message', async (event, body) => {
   console.log('message');
-  console.log('event :', event);
-  console.log('body : ', body);
+  // console.log('event :', event);
+  // console.log('body : ', body);
 
   if (event.bot_profile) {
     return;
