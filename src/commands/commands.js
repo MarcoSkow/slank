@@ -12,6 +12,21 @@ function commands(req, res, next) {
   next();
 }
 
+function hoursToString(hours) {
+  const hoursABS = Math.abs(hours);
+  const days = Math.floor(hoursABS / 8.8);
+  const valueMinusDays = hoursABS / 8.8 - days;
+
+  const rhours = Math.floor(valueMinusDays * 8.8);
+  const minutes = Math.round((valueMinusDays * 8.8 - rhours) * 60);
+
+  const phrase = hours < 0 ? 'Você tem um débito de ' : 'Você tem um crédito de ';
+  return `${phrase} ${hours}. \n 
+          Isso corresponde a : ${days.toString().padStart(2, '0')} dias ${rhours.toString().padStart(2, '0')}:${minutes
+    .toString()
+    .padStart(2, '0')} hrs.`;
+}
+
 function handlerBancoHoras(req, res) {
   let { response_url } = req.body;
   res.status(200).send();
@@ -22,22 +37,13 @@ function handlerBancoHoras(req, res) {
     console.log('----------------------------');
     console.log(user);
     console.log('----------------------------');
-    // response_url = response_url.replace('https', 'http');
     console.log(response_url);
     try {
-      const response = await axios.post(response_url, { text: 'hoje tem gol do Gabigol !' });
+      await axios.post(response_url, { text: hoursToString(user.saldo) });
     } catch (error) {
       console.log(error);
     }
   }, 10);
-
-  // (async () => {
-  //   axios
-  //     .post(req.body.response_url, {
-  //       text: `Seu saldo é de : ${user.saldo}`
-  //     })
-  //     .catch(console.error);
-  // })();
 }
 
 module.exports = commands;
