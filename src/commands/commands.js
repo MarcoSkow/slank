@@ -24,10 +24,10 @@ function hoursToString(hours) {
   const minutes = Math.round((valueMinusDays * 8.8 - rhours) * 60);
 
   const phrase = hours < 0 ? 'Você tem um débito de ' : 'Você tem um crédito de ';
-  return `${phrase} ${hours}. \n 
-          Isso corresponde a : ${days.toString().padStart(2, '0')} dias ${rhours.toString().padStart(2, '0')}:${minutes
-    .toString()
-    .padStart(2, '0')} hrs.`;
+  return (
+    `${phrase} ${hours}. \n ` +
+    `Isso corresponde a : ${days.toString().padStart(2, '0')} dias ${rhours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} hrs.`
+  );
 }
 
 function handlerBancoHoras(req, res) {
@@ -36,11 +36,11 @@ function handlerBancoHoras(req, res) {
 
   setTimeout(async () => {
     const user = await userHelper.getUserBySlackId(req.body.user_id);
-    console.log(req.body);
-    console.log('----------------------------');
-    console.log(user);
-    console.log('----------------------------');
-    console.log(response_url);
+    // console.log(req.body);
+    // console.log('----------------------------');
+    // console.log(user);
+    // console.log('----------------------------');
+    // console.log(response_url);
     try {
       await axios.post(response_url, { text: hoursToString(user.saldo) });
     } catch (error) {

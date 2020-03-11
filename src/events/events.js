@@ -59,11 +59,12 @@ async function botInteractive(event) {
     Mas já consigo ajudar com algumas coisas :
     - consigo controlar a turma do lanche no desenvolvimento :stuck_out_tongue_winking_eye:
     - consigo enviar notificações no Slack assim que alguma solicitação do Zank é encaminhada para alguém.
-    - neste momento estou aprendendo a consultar o seu saldo no banco de horas, tente o comando \`/slank-bh\` e veja o que aparece.
+    - consigo consultar seu saldo no banco de horas, tente o comando \`/slank-bh\` e veja o que acontece.
 
     Por enquanto é só isso... mas como eu disse, quanto mais vocês conversarem comigo, mais eu aprendo.
 
     :clap::clap::clap:
+    _ para sugerir alguma funcionalidade, faça @slank sugestão <texto> _
     `;
   } else {
     await web.chat.postMessage({ channel: USER_ADMIN, text: `${user} enviou uma mensagem ao slank : \n ${event.text}` });
