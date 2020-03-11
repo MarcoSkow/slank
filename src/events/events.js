@@ -55,6 +55,8 @@ async function botInteractive(event) {
     msg = `Boa noite ${user} ! \nComo posso ajudar ?`;
   } else if (textWithoutUser.toLowerCase().includes('sugestão')) {
     msg = `Olá humano, ${user} ! \nSua sugestão foi anotada. :+1:`;
+
+    await web.chat.postMessage({ channel: USER_ADMIN, text: `${user} enviou uma sugestão : \n *_${event.text}*_` });
   } else if (textWithoutUser.toLowerCase().includes('pode fazer')) {
     msg = `Olá ${user} ! \n
     Eu ainda estou aprendendo, quanto mais você conversar comigo, mais eu aprendo. 
