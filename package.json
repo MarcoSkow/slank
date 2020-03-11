@@ -9,7 +9,7 @@
     "heroku": "git push heroku master"
   },
   "author": "Leandro Azevedo",
-  "license": "ISC",
+  "license": "MIT",
   "engines": {
     "node": "^10.19.0"
   },
