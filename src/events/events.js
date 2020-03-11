@@ -53,6 +53,8 @@ async function botInteractive(event) {
     msg = `Boa tarde ${user} ! \nComo posso ajudar ?`;
   } else if (textWithoutUser.toLowerCase().includes('boa noite')) {
     msg = `Boa noite ${user} ! \nComo posso ajudar ?`;
+  } else if (textWithoutUser.toLowerCase().includes('sugestão')) {
+    msg = `Olá humano, ${user} ! \nSua sugestão foi anotada. :joinha:`;
   } else if (textWithoutUser.toLowerCase().includes('pode fazer')) {
     msg = `Olá ${user} ! \n
     Eu ainda estou aprendendo, quanto mais você conversar comigo, mais eu aprendo. 
@@ -67,7 +69,7 @@ async function botInteractive(event) {
     _ para sugerir alguma funcionalidade, faça @slank sugestão <texto> _
     `;
   } else {
-    await web.chat.postMessage({ channel: USER_ADMIN, text: `${user} enviou uma mensagem ao slank : \n ${event.text}` });
+    await web.chat.postMessage({ channel: USER_ADMIN, text: `${user} enviou uma mensagem ao slank : \n *_${event.text}*_` });
   }
   const result = await web.chat.postMessage({ channel, text: msg });
 }
