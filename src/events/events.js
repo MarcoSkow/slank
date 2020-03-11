@@ -54,7 +54,7 @@ async function botInteractive(event) {
   } else if (textWithoutUser.toLowerCase().includes('boa noite')) {
     msg = `Boa noite ${user} ! \nComo posso ajudar ?`;
   } else if (textWithoutUser.toLowerCase().includes('sugestão')) {
-    msg = `Olá humano, ${user} ! \nSua sugestão foi anotada. :joinha:`;
+    msg = `Olá humano, ${user} ! \nSua sugestão foi anotada. :+1:`;
   } else if (textWithoutUser.toLowerCase().includes('pode fazer')) {
     msg = `Olá ${user} ! \n
     Eu ainda estou aprendendo, quanto mais você conversar comigo, mais eu aprendo. 
