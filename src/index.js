@@ -6,9 +6,11 @@ const express = require('express');
 const slackEvents = require('./events/events');
 const webapi = require('./webClient/index');
 const urlVerificarion = require('./routes/urlVerifications');
+const slashCommands = require('./commands/commands');
 
 const app = express();
 app.use('/slack/events', slackEvents.expressMiddleware());
+app.post('/slack/commands', express.urlencoded({ extended: false }), slashCommands);
 
 app.use(express.json(), express.urlencoded({ extended: false }));
 

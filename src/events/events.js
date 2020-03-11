@@ -53,6 +53,18 @@ async function botInteractive(event) {
     msg = `Boa tarde ${user} ! \nComo posso ajudar ?`;
   } else if (textWithoutUser.toLowerCase().includes('boa noite')) {
     msg = `Boa noite ${user} ! \nComo posso ajudar ?`;
+  } else if (textWithoutUser.toLowerCase().includes('pode fazer')) {
+    msg = `Olá ${user} ! \n
+    Eu ainda estou aprendendo, quanto mais você conversar comigo, mais eu aprendo. 
+    Mas já consigo ajudar com algumas coisas :
+    - consigo controlar a turma do lanche no desenvolvimento :stuck_out_tongue_winking_eye:
+    - consigo enviar notificações no Slack assim que alguma solicitação do Zank é encaminhada para alguém.
+    - neste momento estou aprendendo a consultar o seu saldo no banco de horas, tente o comando /slank-bh e veja o que aparece.
+
+    Por enquanto é só isso... mas como eu disse, quanto mais vocês conversarem comigo, mais eu aprendo.
+
+    :clap::clap::clap:
+    `;
   } else {
     await web.chat.postMessage({ channel: USER_ADMIN, text: `${user} enviou uma mensagem ao slank : \n ${event.text}` });
   }
