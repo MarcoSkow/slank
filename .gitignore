@@ -1,8 +1,6 @@
+## arquivos do projeto
 node_modules
-
 .now
-
 .env
-
 .vscode
-
+package-lock.json
