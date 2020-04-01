@@ -24,9 +24,7 @@ const rand = (min, max) => Math.floor(Math.random() * max) + min;
 router.post('/lanche', async (req, res) => {
   const channel = req.body.channel || process.env.GROUP_CHANNEL || 'bots';
 
-  const hoje = new Date().getDate();
-
-  let turma = hoje % 2 === 0 ? '01' : '02';
+  let turma = localStorage.getItem('turma') !== null ? localStorage.getItem('turma') : '01';
 
   let emoji = rand(0, emojis.length);
 
@@ -36,6 +34,7 @@ router.post('/lanche', async (req, res) => {
 
   setTimeout(async () => {
     turma = turma === '01' ? '02' : '01';
+    localStorage.setItem('turma', turma);
     text = `${emojis[emoji]}  Turma ${turma} - Lanche !  ${emojis[emoji]}`;
     await web.chat.postMessage({ channel, text });
   }, 1000 * 60 * process.env.LANCHE_INTERVAL);
